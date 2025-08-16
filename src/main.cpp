@@ -274,11 +274,16 @@ void opcontrol() {
       intake_motor2.move(0);
     }
     // . . .
-    /*
-     * code for buttons R1, R2, L1, and L2 are basic intake controls
-     * code for buttons Y and Right Arrow are macros
-     */
 
-    pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
+    if (master.get_digital(DIGITAL_A)) {
+      scrapper1.set_value(true);  // Turn on scrapper
+    } else if (master.get_digital(DIGITAL_B)) {
+      scrapper1.set_value(false);  // Turn off scrapper
+    } /*
+       * code for buttons R1, R2, L1, and L2 are basic intake controls
+       * code for buttons Y and Right Arrow are macros
+       */
+
+    pros ::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
 }
