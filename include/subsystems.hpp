@@ -12,4 +12,4 @@ extern Drive chassis;
 inline pros::Motor intake_motor1(8);
 inline pros::Motor intake_motor2(1);
 
-inline pros::adi::DigitalOut scrapper1('D');
+inline ez::Piston scrapper('D');

@@ -58,8 +58,9 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+
       {"Drive\n\nDrive forward and come back", drive_example},
-      {"Turn\n\nTurn 3 times.", turn_example},
+      {"Turn\n\npid tuning.", turn_example},
       {"Drive and Turn\n\nDrive forward, turn, come back", drive_and_turn},
       {"Drive and Turn\n\nSlow down during drive", wait_until_change_speed},
       {"Swing Turn\n\nSwing in an 'S' curve", swing_example},
@@ -72,6 +73,7 @@ void initialize() {
       {"Boomerang\n\nGo to (0, 24, 45) then come back to (0, 0, 0)", odom_boomerang_example},
       {"Boomerang Pure Pursuit\n\nGo to (0, 24, 45) on the way to (24, 24) then come back to (0, 0, 0)", odom_boomerang_injected_pure_pursuit_example},
       {"Measure Offsets\n\nThis will turn the robot a bunch of times and calculate your offsets for your tracking wheels.", measure_offsets},
+      {"Six Ball + One\n\nDrive forward, turn, and come back, but blend everything together :D", sixBALLplusONE},
   });
 
   // Initialize chassis and auton selector
@@ -273,17 +275,14 @@ void opcontrol() {
       intake_motor1.move(0);
       intake_motor2.move(0);
     }
+
     // . . .
 
-    if (master.get_digital(DIGITAL_A)) {
-      scrapper1.set_value(true);  // Turn on scrapper
-    } else if (master.get_digital(DIGITAL_B)) {
-      scrapper1.set_value(false);  // Turn off scrapper
-    } /*
-       * code for buttons R1, R2, L1, and L2 are basic intake controls
-       * code for buttons Y and Right Arrow are macros
-       */
+    scrapper.button_toggle(master.get_digital_new_press(DIGITAL_A));  // Toggle scrapper piston with A button
+    /* code for buttons R1, R2, L1, and L2 are basic intake controls
+     * code for buttons Y and Right Arrow are macros
+     */
 
-    pros ::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
+    pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
 }
