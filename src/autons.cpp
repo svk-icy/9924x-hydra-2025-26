@@ -364,17 +364,42 @@ void measure_offsets() {
 // . . .
 // Make your own autonomous functions here!
 void sixBALLplusONE() {
-  // go to intake set of 3 balls by
+  // go to intake set of 3 balls
   intake_motor1.move(127);
+  chassis.pid_turn_set(26_deg, TURN_SPEED);
+  chassis.pid_wait();
 
   chassis.pid_drive_set(24_in, 50, true);
   chassis.pid_wait_until(16_in);
-  chassis.pid_turn_set(-5_deg, TURN_SPEED);
+  chassis.pid_turn_set(21_deg, TURN_SPEED);
   chassis.pid_wait();
   chassis.pid_drive_set(14_in, 50, true);
   chassis.pid_wait();
+  intake_motor1.move(0);
 
-  chassis.pid_turn_set(135_deg, TURN_SPEED);
+  // head towards match loads
+  chassis.pid_turn_set(145_deg, TURN_SPEED);
   chassis.pid_wait();
+  chassis.pid_drive_set(41.5_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  intake_motor1.move(127);
+  chassis.pid_turn_set(181_deg,TURN_SPEED);
+  chassis.pid_wait();
+  scrapper.set(true);
+  pros::delay(1100);
+
+  chassis.pid_drive_set(11_in, 105, true); // intake 3 matchloads
+  chassis.pid_wait();
+  pros::delay(50);
+  chassis.pid_drive_set(-15_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  scrapper.set(false);
+  
+  chassis.pid_turn_set(0_deg, TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(19_in,DRIVE_SPEED, true);
+  chassis.pid_wait();
+  intake_motor2.move(-127); // score 7 in long goal
+  pros::delay(4000);
 }
 // . . .
